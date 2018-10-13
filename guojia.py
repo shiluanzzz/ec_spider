@@ -104,7 +104,8 @@ def get_data(city_name,city_code,path):
 
     print('国家统计局 {} 爬取完毕 总数据：'.format(Area_data['city_name']),all_count,'条')
     ll.append(Area_data)
-    with open("{}.json".format(path+'/'+'国家统计局数据/'+Area_data['city_name']), "w", encoding='utf-8') as file2:
+    file_path=str(path)+'/'+'国家统计局数据/'+Area_data['city_name']+".json"
+    with open(file=file_path,mode='w', encoding='utf-8') as file2:
         json.dump(ll, file2,ensure_ascii=False)
     #print("{}.json".format(Area_data['city_name']),"文件保存成功！")
 

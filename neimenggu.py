@@ -82,7 +82,9 @@ def get_data(data_name,code,date_list,path):
             traceback.print_exc(file=open("Exc.txt","a"))
             continue
     #解析后总数据保存
-    with open("{}.json".format(data_path+'/'+date_list[0][:4]+data_name), "w") as f:
+    file_nn="{}.json".format(data_path+'/'+date_list[0][:4]+data_name)
+    print(file_nn)
+    with open(file=file_nn,mode='w') as f:
         json.dump(data_list, f,ensure_ascii=False)
         print('内蒙古 {}  {} 数据 解析成功！'.format(valuecode2, data_name))
 
