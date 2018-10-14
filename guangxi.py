@@ -28,6 +28,17 @@ def get_pic(year):
             print(img_link)
     web.close()
 def get_pic_by_request(year,path):
+    try:
+        os.mkdir(path + '/' + '广西')
+        path = path = '/' + '广西'
+    except:
+        pass
+    try:
+        os.mkdir(path+'/'+'{}'.format(year))
+        path=path='/'+'{}'.format(year)
+    except:
+        pass
+
     url='http://www.gxtj.gov.cn/tjsj/tjnj/2015/zk/left.htm'
     re=requests.get("http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/left.htm".format(year))
     #file=open('test.txt','w',encoding='utf-8')
