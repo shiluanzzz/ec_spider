@@ -1,32 +1,32 @@
-from selenium import webdriver
+#from selenium import webdriver
 import time,os,requests,urllib
 from bs4 import BeautifulSoup
 def get_driver():
     #print(os.getcwd())
     return os.getcwd().replace('guangxi','geckodriver.exe')
 
-
-def get_pic(year):
-    # win 驱动
-    web=webdriver.Firefox(executable_path=get_driver())
-    # linux 驱动
-    #web=webdriver.Firefox(executable_path="/home/shitou/geckodriver")
-    url="http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/indexch.htm".format(year)
-    web.get(url)
-    #web.implicitly_wait(5)
-    web.switch_to_frame('contents')
-    header_list=web.find_elements_by_id('foldheader')
-    fold_list=web.find_elements_by_id("foldinglist")
-    for each in header_list:
-        # print(each.text)
-        pass
-    img_list=[]
-    for each in fold_list:
-        for each_li in each.find_elements_by_tag_name('li'):
-            print(each_li.text)
-            img_link=each_li.find_element_by_tag_name('a').get_attribute('href')
-            print(img_link)
-    web.close()
+#
+# def get_pic(year):
+#     # win 驱动
+#     web=webdriver.Firefox(executable_path=get_driver())
+#     # linux 驱动
+#     #web=webdriver.Firefox(executable_path="/home/shitou/geckodriver")
+#     url="http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/indexch.htm".format(year)
+#     web.get(url)
+#     #web.implicitly_wait(5)
+#     web.switch_to_frame('contents')
+#     header_list=web.find_elements_by_id('foldheader')
+#     fold_list=web.find_elements_by_id("foldinglist")
+#     for each in header_list:
+#         # print(each.text)
+#         pass
+#     img_list=[]
+#     for each in fold_list:
+#         for each_li in each.find_elements_by_tag_name('li'):
+#             print(each_li.text)
+#             img_link=each_li.find_element_by_tag_name('a').get_attribute('href')
+#             print(img_link)
+#     web.close()
 def get_pic_by_request(year,path):
     try:
         os.mkdir(path + '/' + '广西')
