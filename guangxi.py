@@ -1,5 +1,5 @@
 #from selenium import webdriver
-import time,os,requests,urllib
+import time,os,requests,urllib,traceback
 from bs4 import BeautifulSoup
 
 def get_pic_by_request(year,path):
@@ -13,7 +13,7 @@ def get_pic_by_request(year,path):
 
     except:
         pass
-    path = path = '/' + '{}'.format(year)
+    path = path + '/' + '{}'.format(year)
     url='http://www.gxtj.gov.cn/tjsj/tjnj/2015/zk/left.htm'
     re=requests.get("http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/left.htm".format(year))
     #file=open('test.txt','w',encoding='utf-8')
@@ -40,6 +40,7 @@ def get_pic_by_request(year,path):
                     print('正在下载 {} : {}'.format(filename,herf))
 
                 except:
+                    traceback.print_exc()
                     print('下载错误！ {} : {}'.format(filename, herf))
 
 

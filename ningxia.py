@@ -1,4 +1,6 @@
 import time,os,requests,urllib
+import traceback
+
 from bs4 import BeautifulSoup
 
 def get_pic_by_request(year,path):
@@ -25,10 +27,11 @@ def get_pic_by_request(year,path):
 
                 try:
                     source=requests.get(href)
-                    with open(r'{}{}{}'.format(path+'/'+dir_name+"/",filename,href[-4:]),'wb')as f:
+                    with open(r'{}{}{}'.format(path+"/",filename,href[-4:]),'wb')as f:
                         f.write(source.content)
                     print('正在抓取宁夏：' + href)
                 except:
+                    traceback.print_exc()
                     print('宁夏，错误：' + href)
                     pass
 
@@ -50,10 +53,11 @@ def get_pic_by_request(year,path):
                 href = "http://www.nxtj.gov.cn/tjsj/ndsj/{}/indexfiles/".format(year) + a['href']
                 try:
                     source = requests.get(href)
-                    with open(r'{}{}{}'.format(path + '/' + dir_name + "/", filename, href[-4:]), 'wb')as f:
+                    with open(r'{}{}{}'.format(path+ "/", filename, href[-4:]), 'wb')as f:
                         f.write(source.content)
                     print('正在抓取宁夏：' + href)
                 except:
+                    traceback.print_exc()
                     print('宁夏，错误：' +href)
                     pass
 
@@ -70,7 +74,7 @@ def get_ningxia(year,path):
     except:
         pass
     path = path + '/' + year
-    get_pic_by_request(year=year,path=path+'/'+"{}".format(year))
+    get_pic_by_request(year=year,path=path)
 
 if __name__ == '__main__':
     get_ningxia(2016,os.getcwd())
