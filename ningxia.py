@@ -15,19 +15,21 @@ def get_pic_by_request(year,path):
         for each in li_list:
             dir_name=each.text[:4].replace('\n','').replace('-','')
             try:
-                os.mkdir(path+'\\'+dir_name)
+                os.mkdir(path+'/'+dir_name)
             except:
                 pass
+            path=path+'/'+dir_name
             for a in each.find_all('a'):
                 filename=a.text
                 href = "http://www.nxtj.gov.cn/tjsj/ndsj/{}/indexfiles/".format(year)+a['href']
 
                 try:
                     source=requests.get(href)
-                    with open(r'{}{}{}'.format(path+'\\'+dir_name+"\\",filename,href[-4:]),'wb')as f:
+                    with open(r'{}{}{}'.format(path+'/'+dir_name+"/",filename,href[-4:]),'wb')as f:
                         f.write(source.content)
+                    print('正在抓取宁夏：' + href)
                 except:
-                    print(href)
+                    print('宁夏，错误：' + href)
                     pass
 
     else:
@@ -39,30 +41,36 @@ def get_pic_by_request(year,path):
         for each in li_list:
             dir_name = each.text[:4].replace('\n', '').replace('-', '')
             try:
-                os.mkdir(path + '\\' + dir_name)
+                os.mkdir(path + '/' + dir_name)
             except:
                 pass
+            path = path + '/' + dir_name
             for a in each.find_all('a'):
                 filename = a.text
                 href = "http://www.nxtj.gov.cn/tjsj/ndsj/{}/indexfiles/".format(year) + a['href']
                 try:
                     source = requests.get(href)
-                    with open(r'{}{}{}'.format(path + '\\' + dir_name + "\\", filename, href[-4:]), 'wb')as f:
+                    with open(r'{}{}{}'.format(path + '/' + dir_name + "/", filename, href[-4:]), 'wb')as f:
                         f.write(source.content)
+                    print('正在抓取宁夏：' + href)
                 except:
-
-                    print(href)
+                    print('宁夏，错误：' +href)
                     pass
 
 
 def get_ningxia(year,path):
-    year=str(year)
     try:
-        os.mkdir(path+'\\{}'.format(year))
+        os.mkdir(path+'/{}'.format('宁夏'))
     except:
         pass
-    get_pic_by_request(year=year,path=path+'\\'+"{}".format(year))
+    path = path + '/' + '宁夏'
+    year=str(year)
+    try:
+        os.mkdir(path+'/{}'.format(year))
+    except:
+        pass
+    path = path + '/' + year
+    get_pic_by_request(year=year,path=path+'/'+"{}".format(year))
 
 if __name__ == '__main__':
-
     get_ningxia(2016,os.getcwd())

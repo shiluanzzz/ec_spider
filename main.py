@@ -8,6 +8,7 @@ def get_guojia():
     config=configparser.ConfigParser()
     config.read('ec.ini')
     path=config.get('datafile','path')
+    error_path=config.get('datafile','error_path')
     a=config.get('Todo','guojiatongjiju')
     b=config.get('worked','guojiatongjiju')
     if a :
@@ -159,15 +160,18 @@ def get_area_data(name):
         for each in a_list:
             if each not in b_list:
                 try:
-                    guangxi.get_pic_by_request(each, path)
-                    # neimenggu.get_neimenggu(each, path)
+                    if name=='guangxi':
+                        guangxi.get_pic_by_request(each, path)
+                    elif name=='ningxia':
+                        ningxia.get_ningxia(each,path)
+                    elif name=='neimenggu':
+                        neimenggu.get_neimenggu(each, path)
                     b_list.append(each)
                     a_list.remove(each)
                 except:
                     fileee = path + '/' + '{}_error.txt'.format(name)
                     traceback.print_exc(file=open(fileee, 'w+'))
                     # traceback.print_exc(file=open('{}内蒙古_error.txt'.format(path + '/'), 'w+'))
-                    logging.error('{} 抓取错误，请查看日志。'.format(name))
             else:
                 a_list.remove(each)
     tt = ""
@@ -185,7 +189,7 @@ def get_area_data(name):
     with open('ec.ini', 'w')as f:
         config.write(f)
 if __name__ == '__main__':
-    #get_area_data('ningxia')
-    get_area_data('guangxi')
-    #get_area_data('neimenggu')
-    get_guojia()
+    get_area_data('ningxia')
+    # get_area_data('guangxi')
+    # get_area_data('neimenggu')
+    # get_guojia()

@@ -1,44 +1,19 @@
 #from selenium import webdriver
 import time,os,requests,urllib
 from bs4 import BeautifulSoup
-def get_driver():
-    #print(os.getcwd())
-    return os.getcwd().replace('guangxi','geckodriver.exe')
 
-#
-# def get_pic(year):
-#     # win 驱动
-#     web=webdriver.Firefox(executable_path=get_driver())
-#     # linux 驱动
-#     #web=webdriver.Firefox(executable_path="/home/shitou/geckodriver")
-#     url="http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/indexch.htm".format(year)
-#     web.get(url)
-#     #web.implicitly_wait(5)
-#     web.switch_to_frame('contents')
-#     header_list=web.find_elements_by_id('foldheader')
-#     fold_list=web.find_elements_by_id("foldinglist")
-#     for each in header_list:
-#         # print(each.text)
-#         pass
-#     img_list=[]
-#     for each in fold_list:
-#         for each_li in each.find_elements_by_tag_name('li'):
-#             print(each_li.text)
-#             img_link=each_li.find_element_by_tag_name('a').get_attribute('href')
-#             print(img_link)
-#     web.close()
 def get_pic_by_request(year,path):
     try:
         os.mkdir(path + '/' + '广西')
-        path = path = '/' + '广西'
     except:
         pass
+    path = path + '/' + '广西'
     try:
         os.mkdir(path+'/'+'{}'.format(year))
-        path=path='/'+'{}'.format(year)
+
     except:
         pass
-
+    path = path = '/' + '{}'.format(year)
     url='http://www.gxtj.gov.cn/tjsj/tjnj/2015/zk/left.htm'
     re=requests.get("http://www.gxtj.gov.cn/tjsj/tjnj/{}/zk/left.htm".format(year))
     #file=open('test.txt','w',encoding='utf-8')
@@ -49,7 +24,10 @@ def get_pic_by_request(year,path):
     ul_list=soup.find_all('ul',id='foldinglist')
     if(len(tag_list)==len(ul_list)):
         for num in range(len(tag_list)):
-            os.mkdir(path+'/'+tag_list[num].text)
+            try:
+                os.mkdir(path+'/'+tag_list[num].text)
+            except:
+                pass
             dir=path+'/'+tag_list[num].text
             print('===={}===='.format(tag_list[num].text))
             for each in ul_list[num].find_all('li'):
@@ -57,7 +35,7 @@ def get_pic_by_request(year,path):
                 filename=each.find('a').text
                 try:
                     source=requests.get(herf)
-                    with open(r'{}{}{}'.format(dir+"/",filename,herf[-4:]),'wb')as f:
+                    with open(r'{}{}{}'.format(dir+'/',filename,herf[-4:]),'wb')as f:
                         f.write(source.content)
                     print('正在下载 {} : {}'.format(filename,herf))
 
