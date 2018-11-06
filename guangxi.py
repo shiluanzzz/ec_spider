@@ -38,7 +38,6 @@ def get_pic_by_request(year,path):
                     with open(r'{}{}{}'.format(dir+'/',filename,herf[-4:]),'wb')as f:
                         f.write(source.content)
                     print('正在下载 {} : {}'.format(filename,herf))
-
                 except:
                     traceback.print_exc()
                     print('下载错误！ {} : {}'.format(filename, herf))

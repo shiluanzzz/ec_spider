@@ -10,7 +10,6 @@ url="http://data.stats.gov.cn/easyquery.htm"
 def try_get_data(city_code,valuecode):
     # 返回True 表示这个是最底层的等级了
     k11 = int(round(time.time() * 1000))
-
     # 请求参数部分
     wdss = str([{"wdcode": "reg", "valuecode": "{}".format(city_code)}]).replace('\'', '\"').replace('+', '')
     dfwdss=str([{"wdcode":"zb","valuecode":"{}".format(valuecode)}]).replace('\'', '\"').replace('+', '')
@@ -22,7 +21,6 @@ def try_get_data(city_code,valuecode):
               'rowcode': '{}'.format('zb'),
               'wds': wdss
               }
-
     # 获取请求 未配置代理池 不需要
     r = requests.get(url=url, params=params)
     # 数据解码解析成json
@@ -110,8 +108,6 @@ def get_data(city_name,city_code,path):
     #print("{}.json".format(Area_data['city_name']),"文件保存成功！")
 
     return Area_data
-
-
 def get_guojia(path):
 
     city_id={
