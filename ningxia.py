@@ -77,12 +77,43 @@ def down_file(url,path):
     #     f.write(source.content)
     # print('正在抓取宁夏：' + href)
 
-def ningxia_2013(year,path):
-    pass
-def ningxia_2014(year,path):
-    pass
-def ningxia_2015(year,path):
-    pass
+
+
+# 08-15年的年鉴调用这个方法
+def ningxia_20_(year,path):
+    url_other="http://www.nxtj.gov.cn/tjsj/ndsj/{}/left.htm".format(year)
+    url_2015="http://www.nxtj.gov.cn/tjsj/ndsj/2015/lefte.htm"
+
+    try:
+        os.mkdir(path + '/' + str(year))
+    except:
+        traceback.print_exc()
+        pass
+    path = path + '/' + str(year)
+    if year == "2015":
+        re_text = get_page(url_2015)
+    elif int(year)>=2009 and int(year)<2015:
+        re_text=get_page(url_other)
+    else: return 0
+    soup = BeautifulSoup(re_text, 'lxml')
+    ul = soup.find('th', align='left').find('ul')
+    ul_list = ul.find_all('ul', id="foldinglist")
+    for each in ul_list:
+        # print(each.find_previous_sibling('li',id="foldheader").text,"\n=====",each.text[:20],"\n********************************")
+        try:
+            mulu = each.find_previous_sibling('li', id="foldheader").text.replace("\n", '')
+        except:
+            break
+        try:
+            os.mkdir(path + '/' + mulu)
+        except:
+            pass
+        temp_path = path + '/' + mulu
+        for a in each.find_all('a'):
+            file_name = a.text[:6] + find_cn(a.text[6:])
+            link = "http://www.nxtj.gov.cn/tjsj/ndsj/{}/".format(year) + a['href']
+            down_file(url=link, path=path + '/' + mulu + '/' + file_name + link[-4:])
+            print("正在下载 宁夏 {} 年".format(year), file_name)
 
 def ningxia_2016(path):
     year = '2016'
@@ -215,23 +246,15 @@ def get_ningxia(year,path):
     except:
         pass
     path = path + '/' + '宁夏'
-    year=str(year)
-    try:
-        os.mkdir(path+'/{}'.format(year))
-    except:
-        pass
-    path = path + '/' + year
-    get_pic_by_request(year=year,path=path)
+    if year=='2016':
+        ningxia_2016(path=path)
+    elif year=='2017':
+        ningxia_2017(path=path)
+    elif int(year)<2016 and int(year)>=2009:
+        ningxia_20_(year=year,path=path)
+    else:
+        print("宁夏地区目标年限 {} 超出可抓取范围！".format(year))
 
 if __name__ == '__main__':
 
-    # 2017
-    # http: // www.nxtj.gov.cn / tjsj / ndsj / 2017 / indexfiles / left.htm
-    # 2016
-    # http: // www.nxtj.gov.cn / tjsj / ndsj / 2016 / indexfiles / left.htm
-    # get_ningxia(2015,"F:/ec")
-    # ningxia_2017("F:/ec/宁夏")
-    # down_file(11,1)
-    # tt="5-17表第六次全国人口普查就业人口产业构成Employment\n\tCompositionbyIndustryonPopulationCensusin2010.htm"
-    # find_cn(tt)
-    ningxia_2016(path="F:/ec/宁夏")
+    ningxia_20_(year='2009',path='F:/ec/宁夏')
