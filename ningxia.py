@@ -256,5 +256,4 @@ def get_ningxia(year,path):
         print("宁夏地区目标年限 {} 超出可抓取范围！".format(year))
 
 if __name__ == '__main__':
-
     ningxia_20_(year='2009',path='F:/ec/宁夏')
