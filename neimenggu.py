@@ -78,8 +78,8 @@ def get_data(data_name,code,date_list,path):
                     print('----------------')
             data_list.append(data)
         except:
-            print("error  in Exc.txt .")
-            traceback.print_exc(file=open("Exc.txt","a"))
+            print("内蒙古地区，原始数据 {} 出错！".format(data_name))
+            #traceback.print_exc(file=open("Exc.txt","a"))
             continue
     #解析后总数据保存
     file_nn="{}.json".format(data_path+'/'+date_list[0][:4]+data_name)
@@ -90,41 +90,50 @@ def get_data(data_name,code,date_list,path):
 
 def get_neimenggu(year,path):
     try:
-        os.mkdir(path+'/'+'内蒙古')
+        a=int(year)
     except:
-        pass
-    path=path+'/'+'内蒙古'
+        print("内蒙古地区 目标年鉴 {} 时间格式错误！".format(year))
+        return 0
 
-    try:
-        os.mkdir(path + '/' + '{}'.format(year))
-    except:
-        pass
-    path = path + '/' + '{}'.format(year)
+    if int(year)<=2016 and int(year)>=2000:
+        try:
+            os.mkdir(path+'/'+'内蒙古')
+        except:
+            pass
+        path=path+'/'+'内蒙古'
+
+        try:
+            os.mkdir(path + '/' + '{}'.format(year))
+        except:
+            pass
+        path = path + '/' + '{}'.format(year)
 
 
-    list = [{'工业增加值增长速度': 'OA0101'},
-            {'工业产品销售率': 'OA0102'},
-            {'主要工业产品产量': 'OA0103'},
-            {'工业经济效率': 'OA0104'},
-            {'固定投资资产': 'OA0505'},
-            {'主要行业固定投资资产': 'OA0506'},
-            {'房地产开发': 'OA0507'},
-            {'社会消费品零售总额': 'OA08'},
-            {'对外经济': 'OA09'},
-            {'财政': 'OA0A'},
-            {'金融': 'OA0C'},
-            {'全区及全国主要经济指标': 'OA1F'}
-            ]
-    t_list = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-    time_list=[]
-    for num in t_list:
-        time_list.append("{}{}".format(str(year),num))
-    for a in list:
-        # 读取list里的字典的第一个键值对
-        for key, value in a.items():
-            #print("data_name: {},code : {}".format(key, value))
-            get_data(key, value, time_list,path=path)
-            break
+        list = [{'工业增加值增长速度': 'OA0101'},
+                {'工业产品销售率': 'OA0102'},
+                {'主要工业产品产量': 'OA0103'},
+                {'工业经济效率': 'OA0104'},
+                {'固定投资资产': 'OA0505'},
+                {'主要行业固定投资资产': 'OA0506'},
+                {'房地产开发': 'OA0507'},
+                {'社会消费品零售总额': 'OA08'},
+                {'对外经济': 'OA09'},
+                {'财政': 'OA0A'},
+                {'金融': 'OA0C'},
+                {'全区及全国主要经济指标': 'OA1F'}
+                ]
+        t_list = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+        time_list=[]
+        for num in t_list:
+            time_list.append("{}{}".format(str(year),num))
+        for a in list:
+            # 读取list里的字典的第一个键值对
+            for key, value in a.items():
+                #print("data_name: {},code : {}".format(key, value))
+                get_data(key, value, time_list,path=path)
+                break
+    else:
+        print("内蒙古地区目标年限 {} 超出可抓取范围！".format(year))
 
 if __name__ == '__main__':
-    get_neimenggu(2013,"C:/Users/石头/Desktop/12333")
+    get_neimenggu('2001',"F:/ec")

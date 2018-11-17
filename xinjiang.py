@@ -32,7 +32,7 @@ def get_xinjiang(year,path):
                     source=requests.get(herf)
                     with open(r'{}{}{}'.format(path+'/',filename,".html"),'wb')as f:
                         f.write(source.content)
-                    print('正在下载 {} : {}'.format(filename,herf))
+                    print('正在下载新疆地区数据 {} '.format(filename))
                 except:
                     traceback.print_exc()
                     print('下载错误！ {} : {}'.format(filename, herf))

@@ -146,5 +146,5 @@ def get_guojia(path):
     for city_name,id in city_id.items():
         get_data(city_name,id,path)
 if __name__=="__main__":
-    get_guojia()
+    get_guojia("F:/ec")
 

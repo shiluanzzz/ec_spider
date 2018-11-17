@@ -37,7 +37,7 @@ def get_pic_by_request(year,path):
                     source=requests.get(herf)
                     with open(r'{}{}{}'.format(dir+'/',filename,herf[-4:]),'wb')as f:
                         f.write(source.content)
-                    print('正在下载 {} : {}'.format(filename,herf))
+                    print('正在下载宁夏地区 {} '.format(filename))
                 except:
                     traceback.print_exc()
                     print('下载错误！ {} : {}'.format(filename, herf))
@@ -45,8 +45,5 @@ def get_pic_by_request(year,path):
 
 
 if __name__ == '__main__':
-    #get_pic('2017')
-    #get_driver()
-    path=os.getcwd()
-    os.mkdir('{}'.format(2015))
-    get_pic_by_request(year=2015,path=path+'/'+"{}".format(2015))
+
+    get_pic_by_request(year=2015,path="F:/ec")
