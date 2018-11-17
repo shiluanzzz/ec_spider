@@ -2,7 +2,7 @@
 import os
 import sys,logging
 import configparser,traceback
-import guangxi,guojia,neimenggu,ningxia
+import guangxi,guojia,neimenggu,ningxia,xinjiang
 import test
 
 def get_guojia():
@@ -46,6 +46,8 @@ def get_area_data(name):
                         ningxia.get_ningxia(each,path)
                     elif name=='neimenggu':
                         neimenggu.get_neimenggu(each, path)
+                    elif name=='xinjiang':
+                        xinjiang.get_xinjiang(each,path)
                     b_list.append(each)
                     a_list.remove(each)
                 except:
@@ -71,6 +73,7 @@ def get_area_data(name):
 
 if __name__ == '__main__':
     get_area_data('ningxia')
-    # get_area_data('guangxi')
-    # get_area_data('neimenggu')
-    # get_guojia()
+    get_area_data('guangxi')
+    get_area_data('neimenggu')
+    get_area_data('xinjiang')
+    get_guojia()
